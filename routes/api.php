@@ -1,12 +1,15 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\UserController;
 
-Route::post('/register', [AuthController::class, 'register']);
+
+Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::apiResource('services', ServiceController::class);
 
-// Protected routes
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', [AuthController::class, 'profile']);
-    Route::post('/logout', [AuthController::class, 'logout']);
-});
+Route::get('/users', [UserController::class, 'index']);
+Route::delete('/users/{id}', [UserController::class, 'destroy']);
+Route::put('/users/{id}', [UserController::class, 'update']);
